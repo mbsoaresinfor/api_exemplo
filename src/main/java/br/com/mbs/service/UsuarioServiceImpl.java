@@ -21,6 +21,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 	
 	@Override
 	public Integer salvarUsuario(Usuario usuario) throws ValidacaoException {
+		System.out.println("Salvando um usuario");
 		if(usuario == null ) {
 			throw new IllegalArgumentException("usuario esta null");
 		}
