@@ -40,8 +40,8 @@ public class SwaggerConfig  {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("Exemplo de API REST")
-                .description("Este é um projeto exemplo, desenvolvido para ser utilizado "
-                		+ "em minhas aulas de programação")
+                .description("Este e um projeto exemplo, desenvolvido para ser utilizado "
+                		+ "em minhas aulas de programacao")
                 .version("1.0.0")                
                 .contact(new Contact("Marcelo Soares", "", "mbsoares.infor@gmail.com"))
                 .build();
