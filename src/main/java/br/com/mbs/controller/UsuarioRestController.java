@@ -17,12 +17,14 @@ import br.com.mbs.entidades.Usuario;
 import br.com.mbs.exception.EntidadeNaoEncontradaException;
 import br.com.mbs.exception.ValidacaoException;
 import br.com.mbs.service.UsuarioService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.annotations.ApiResponse;
 
 
 @RestController(value="API para manipulacao de usuarios")
+@Api(description="Api de usuarios")
 public class UsuarioRestController {
 	
 	@Autowired
