@@ -9,14 +9,19 @@ import br.com.mbs.exception.ValidacaoException;
 public class ValidacaoUsuario {
 
 	public void valida(Usuario usuario) throws ValidacaoException {
+		
+		if(usuario == null) {
+			throw new ValidacaoException("Usuario null");
+		}
+		
 		if("".equals(usuario.getNome())) {
-			throw new ValidacaoException("Nome do usuário não pode estar em branco");
+			throw new ValidacaoException("Nome do usuario não pode estar em branco");
 		}
 		if("".equals(usuario.getEmail())) {
-			throw new ValidacaoException("Email do usuário não pode estar em branco");
+			throw new ValidacaoException("Email do usuario não pode estar em branco");
 		}
 		if("".equals(usuario.getSenha())) {
-			throw new ValidacaoException("Senha do usuário não pode estar em branco");
+			throw new ValidacaoException("Senha do usuario não pode estar em branco");
 		}
 		
 	}

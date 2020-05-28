@@ -87,5 +87,23 @@ public class UsuarioRestController {
 		 }
 		 return responseEntity;
 	  }
+	 
+	 
+	 @ApiOperation(value = "Atualiza um usuario")
+	 @ApiResponses(value = {
+			    @ApiResponse(code = 200, message = "Sucesso na atualizacao do usuario"),
+			    @ApiResponse(code = 405, message = "Problema na validacao do Usuario "),			  
+			})	 
+	 @RequestMapping(value = "/usuarios", method = RequestMethod.PUT, produces="application/json")	 
+	 public ResponseEntity<Void> atualizaUsuario(@RequestBody Usuario usuario) throws Exception{
+		 ResponseEntity<Void> ret = null;
+		 try {
+			 pessoaService.atualizaUsuario(usuario);
+			 ret = ResponseEntity.ok().build();;
+		 }catch(ValidacaoException e) {
+			 ret = ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).build();
+		 }
+		 return ret;
+	  }
 	
 }

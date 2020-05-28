@@ -18,4 +18,6 @@ public interface UsuarioService {
 	Usuario getUsuario(Integer id) throws EntidadeNaoEncontradaException;
 
 	void deletaUsuario(Integer id) throws EntidadeNaoEncontradaException;
+
+	void atualizaUsuario(Usuario usuario) throws ValidacaoException;
 }

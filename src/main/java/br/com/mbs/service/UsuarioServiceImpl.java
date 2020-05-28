@@ -24,9 +24,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 	@Override
 	public Integer salvarUsuario(Usuario usuario) throws ValidacaoException {
 		System.out.println("Salvando o usuario " + usuario);
-		if(usuario == null ) {
-			throw new IllegalArgumentException("usuario esta null");
-		}
+		
 		validacaoUsuario.valida(usuario);
 		Usuario usuarioFromDb =  usuarioDao.save(usuario);
 		return  (int) usuarioFromDb.getId();
@@ -68,6 +66,15 @@ public class UsuarioServiceImpl implements UsuarioService {
 		
 		usuarioDao.deleteById((long)id);
 
+	}
+
+	@Override
+	public void atualizaUsuario(Usuario usuario) throws ValidacaoException {
+		System.out.println("atualizando o usuario " + usuario);
+						
+		validacaoUsuario.valida(usuario);
+		usuarioDao.save(usuario);		
+		
 	}
 
 }
