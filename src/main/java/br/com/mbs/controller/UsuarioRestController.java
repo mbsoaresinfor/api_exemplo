@@ -3,6 +3,8 @@ package br.com.mbs.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.info.ProjectInfoProperties.Build;
+import org.springframework.boot.autoconfigure.kafka.KafkaProperties.Producer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,18 +33,19 @@ public class UsuarioRestController {
 	 private UsuarioService pessoaService;
 
 	 
-	 @ApiOperation(value = "Salva um usuario",response=Integer.class)
+	 @ApiOperation(value = "Salva um usuario")
 	 @ApiResponses(value = {
 			    @ApiResponse(code = 200, message = "Sucesso ao salvar o usuario"),			    
 			    @ApiResponse(code = 405, message = "Usuario com problema na validacao"),
 			})
-	 @RequestMapping(value = "/usuarios", method = RequestMethod.POST, produces="application/json")	 
-	 public ResponseEntity<Integer> salvarUsuario(@RequestBody Usuario usuario) throws Exception{
-		 ResponseEntity<Integer> ret = null;
+	 @RequestMapping(value = "/usuarios", method = RequestMethod.POST,  produces="text/plain")	 
+	 public ResponseEntity<String> salvarUsuario(@RequestBody Usuario usuario) throws Exception{
+		 ResponseEntity<String> ret = null;
 		 try {
-			 ret =  new ResponseEntity<>( pessoaService.salvarUsuario(usuario),HttpStatus.OK);
+			 Integer id = pessoaService.salvarUsuario(usuario);
+			 ret =  new ResponseEntity<>( id.toString(),HttpStatus.OK);
 		 }catch(ValidacaoException e) {
-			 ret = ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).build();
+			 ret = new ResponseEntity<>(e.getMessage(),HttpStatus.METHOD_NOT_ALLOWED);
 		 }
 		 return ret;
 	  }
@@ -51,7 +54,7 @@ public class UsuarioRestController {
 	 @ApiResponses(value = {
 			    @ApiResponse(code = 200, message = "Sucesso no retorno da lista de usuarios")			   
 			})	 
-	 @RequestMapping(value = "/usuarios", method = RequestMethod.GET, produces="application/json")
+	 @RequestMapping(value = "/usuarios", method = RequestMethod.GET, produces="application/json")	 
 	  public List<Usuario> getUsuarios() {
 	    return pessoaService.getUsuarios();
 	  }
