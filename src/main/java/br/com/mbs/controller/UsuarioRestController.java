@@ -39,15 +39,12 @@ public class UsuarioRestController {
 			    @ApiResponse(code = 405, message = "Usuario com problema na validacao"),
 			})
 	 @RequestMapping(value = "/usuarios", method = RequestMethod.POST,  produces="text/plain")	 
-	 public ResponseEntity<String> salvarUsuario(@RequestBody Usuario usuario) throws Exception{
-		 ResponseEntity<String> ret = null;
-		 try {
-			 Integer id = pessoaService.salvarUsuario(usuario);
-			 ret =  new ResponseEntity<>( id.toString(),HttpStatus.OK);
-		 }catch(ValidacaoException e) {
-			 ret = new ResponseEntity<>(e.getMessage(),HttpStatus.METHOD_NOT_ALLOWED);
-		 }
-		 return ret;
+	 public ResponseEntity<String> salvarUsuario(@RequestBody Usuario usuario) throws Exception{		
+		 		 
+		Integer id = pessoaService.salvarUsuario(usuario);
+		return  new ResponseEntity<>( id.toString(),HttpStatus.OK);
+		
+
 	  }
 	    
 	 @ApiOperation(value = "Retorna uma lista de usuarios",response=Usuario.class,responseContainer="List")
@@ -65,14 +62,8 @@ public class UsuarioRestController {
 			    @ApiResponse(code = 404, message = "Usuario nao encontrado"),
 			})
 	 @RequestMapping(value = "/usuarios/{id}", method = RequestMethod.GET, produces="application/json")	 
-	  public ResponseEntity<Usuario> getUsuario(@PathVariable Integer id) throws Exception {
-		 ResponseEntity<Usuario> responseEntity;
-		 try {
-			 responseEntity =  new ResponseEntity<>( pessoaService.getUsuario(id),HttpStatus.OK);			 
-		 }catch( EntidadeNaoEncontradaException e) {
-			 responseEntity = ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-		 }
-		 return responseEntity;
+	  public ResponseEntity<Usuario> getUsuario(@PathVariable Integer id) throws Exception {		 
+		return  new ResponseEntity<>( pessoaService.getUsuario(id),HttpStatus.OK);
 	  }
 	 
 	 
@@ -83,14 +74,8 @@ public class UsuarioRestController {
 			})	 
 	 @DeleteMapping("/usuarios/{id}")
 	 public ResponseEntity<Void> deletaUsuario(@PathVariable Integer id) throws Exception {
-		 ResponseEntity<Void> responseEntity;
-		 try {
-			  pessoaService.deletaUsuario(id);	
-			  responseEntity = ResponseEntity.ok().build();
-		 }catch( EntidadeNaoEncontradaException e) {
-			 responseEntity = ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-		 }
-		 return responseEntity;
+	       pessoaService.deletaUsuario(id);	
+	       return ResponseEntity.ok().build();		 
 	  }
 	 
 	 
@@ -101,14 +86,10 @@ public class UsuarioRestController {
 			})	 
 	 @RequestMapping(value = "/usuarios", method = RequestMethod.PUT, produces="application/json")	 
 	 public ResponseEntity<Void> atualizaUsuario(@RequestBody Usuario usuario) throws Exception{
-		 ResponseEntity<Void> ret = null;
-		 try {
+		 
 			 pessoaService.atualizaUsuario(usuario);
-			 ret = ResponseEntity.ok().build();;
-		 }catch(ValidacaoException e) {
-			 ret = ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).build();
-		 }
-		 return ret;
+			 return ResponseEntity.ok().build();
+		
 	  }
 	
 }
