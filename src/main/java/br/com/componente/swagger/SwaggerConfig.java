@@ -1,4 +1,4 @@
-package br.com.mbs.swagger;
+package br.com.componente.swagger;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,7 +27,7 @@ public class SwaggerConfig  {
      
     	Docket docket =  new Docket(DocumentationType.SWAGGER_2)
         .select()
-        .apis(RequestHandlerSelectors.basePackage("br.com.mbs.controller"))
+        .apis(RequestHandlerSelectors.basePackage("br.com.componente.controller"))
         .paths(PathSelectors.any())
         .build()
         .useDefaultResponseMessages(false)
@@ -39,9 +39,9 @@ public class SwaggerConfig  {
     
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("Exemplo de API REST")
-                .description("Este e um projeto exemplo, desenvolvido para ser utilizado "
-                		+ "em minhas aulas de programacao")
+                .title("API REST componente Back-End")
+                .description("Este projeto representa o componente back-end da "
+                		+ "camada de serviços")
                 .version("1.0.0")                
                 .contact(new Contact("Marcelo Soares", "", "mbsoares.infor@gmail.com"))
                 .build();

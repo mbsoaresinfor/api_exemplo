@@ -1,4 +1,4 @@
-package br.com.mbs;
+package br.com.componente;
 
 import org.springframework.boot.SpringApplication;
 
