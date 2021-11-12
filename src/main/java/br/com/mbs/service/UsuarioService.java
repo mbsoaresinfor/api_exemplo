@@ -4,14 +4,14 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import br.com.mbs.entidades.Usuario;
 import br.com.mbs.exception.EntidadeNaoEncontradaException;
 import br.com.mbs.exception.ValidacaoException;
-import br.com.mbs.repository.Usuario;
 
 
 public interface UsuarioService {
 
-	Integer salvarUsuario (Usuario usuario) throws ValidacaoException;
+	Long salvarUsuario (Usuario usuario) throws ValidacaoException;
 
 	List<Usuario> getUsuarios();
 
@@ -19,5 +19,5 @@ public interface UsuarioService {
 
 	void deletaUsuario(Integer id) throws EntidadeNaoEncontradaException;
 
-	void atualizaUsuario(Usuario usuario) throws ValidacaoException;
+	void atualizaUsuario(Usuario usuario) throws ValidacaoException,EntidadeNaoEncontradaException;
 }

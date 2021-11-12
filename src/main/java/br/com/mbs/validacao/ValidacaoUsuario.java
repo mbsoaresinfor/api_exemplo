@@ -2,8 +2,10 @@ package br.com.mbs.validacao;
 
 import org.springframework.stereotype.Component;
 
+import br.com.mbs.entidades.Usuario;
 import br.com.mbs.exception.ValidacaoException;
-import br.com.mbs.repository.Usuario;
+
+
 
 @Component
 public class ValidacaoUsuario {

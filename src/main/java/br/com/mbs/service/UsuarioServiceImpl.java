@@ -7,9 +7,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.mbs.entidades.Usuario;
 import br.com.mbs.exception.EntidadeNaoEncontradaException;
 import br.com.mbs.exception.ValidacaoException;
-import br.com.mbs.repository.Usuario;
 import br.com.mbs.repository.UsuarioRepository;
 import br.com.mbs.validacao.ValidacaoUsuario;
 
@@ -22,19 +22,18 @@ public class UsuarioServiceImpl implements UsuarioService {
 	private ValidacaoUsuario validacaoUsuario;
 	
 	@Override
-	public Integer salvarUsuario(Usuario usuario) throws ValidacaoException {
+	public Long salvarUsuario(Usuario usuario) throws ValidacaoException {
 		System.out.println("Salvando o usuario " + usuario);
 		
 		validacaoUsuario.valida(usuario);
-		Usuario usuarioFromDb =  usuarioDao.save(usuario);
-		return  (int) usuarioFromDb.getId();
+		return   usuarioDao.salvar(usuario);		
 	}
 
 	@Override
 	public List<Usuario> getUsuarios() {
 		System.out.println("Buscando todos os usuarios");
 		List<Usuario> retorno = new ArrayList<Usuario>();
-		Iterable<Usuario> it =  usuarioDao.findAll();
+		Iterable<Usuario> it =  usuarioDao.listar();
 		it.forEach(u -> retorno.add(u));
 		return retorno;
 	}
@@ -45,7 +44,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 		if(id == null ) {
 			throw new IllegalArgumentException("id esta null");
 		}
-		Optional<Usuario> optUsuario = usuarioDao.findById((long)id);
+		Optional<Usuario> optUsuario = usuarioDao.buscar((long)id);
 	
 		if(optUsuario.isPresent()== false) {
 			throw new EntidadeNaoEncontradaException("Usuário com id " + id + " não encontrado");
@@ -59,21 +58,26 @@ public class UsuarioServiceImpl implements UsuarioService {
 		if(id == null ) {
 			throw new IllegalArgumentException("id esta null");
 		}
-		Optional<Usuario> optUsuario  = usuarioDao.findById((long)id);
+		Optional<Usuario> optUsuario  = usuarioDao.buscar((long)id);
 		if(optUsuario.isPresent()== false) {
 			throw new EntidadeNaoEncontradaException("Usuário com id " + id + " não encontrado");
 		}
 		
-		usuarioDao.deleteById((long)id);
+		usuarioDao.remover((long)id);
 
 	}
 
 	@Override
-	public void atualizaUsuario(Usuario usuario) throws ValidacaoException {
+	public void atualizaUsuario(Usuario usuario) throws ValidacaoException,EntidadeNaoEncontradaException {
 		System.out.println("atualizando o usuario " + usuario);
 						
+		Optional<Usuario> optUsuario  = usuarioDao.buscar(usuario.getId());
+		if(optUsuario.isPresent()== false) {
+			throw new EntidadeNaoEncontradaException("Usuário com id " + usuario.getId() + " não encontrado");
+		}
+		
 		validacaoUsuario.valida(usuario);
-		usuarioDao.save(usuario);		
+		usuarioDao.atualizar(usuario.getId(),usuario);		
 		
 	}
 

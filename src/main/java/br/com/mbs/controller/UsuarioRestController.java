@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.mbs.entidades.Usuario;
 import br.com.mbs.exception.EntidadeNaoEncontradaException;
 import br.com.mbs.exception.ValidacaoException;
-import br.com.mbs.repository.Usuario;
 import br.com.mbs.service.UsuarioService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -42,7 +42,7 @@ public class UsuarioRestController {
 	 @RequestMapping(value = "/usuarios", method = RequestMethod.POST,  produces="text/plain")	 
 	 public ResponseEntity<String> salvarUsuario(@RequestBody Usuario usuario) throws Exception{		
 		 		 
-		Integer id = pessoaService.salvarUsuario(usuario);
+		Long id = pessoaService.salvarUsuario(usuario);
 		return  new ResponseEntity<>( id.toString(),HttpStatus.OK);
 		
 
