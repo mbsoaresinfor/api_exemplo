@@ -1,76 +1,129 @@
 swagger: "2.0"
 info:
-  description: "This is a sample server Petstore server.  You can find out more about     Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).      For this sample, you can use the api key `special-key` to test the authorization     filters."
+  description: "Contract Incident"
   version: "1.0.0"
-  title: "Swagger Petstore"
+  title: "Swagger Incident"
   termsOfService: "http://swagger.io/terms/"
   contact:
-    email: "apiteam@swagger.io"
+    email: "msoares.infor@gmail.com"
   license:
     name: "Apache 2.0"
     url: "http://www.apache.org/licenses/LICENSE-2.0.html"
-host: "petstore.swagger.io"
+host: "localhost"
 basePath: "/v2"
-tags:
-- name: "pet"
-  description: "Everything about your Pets"
-  externalDocs:
-    description: "Find out more"
-    url: "http://swagger.io"
-- name: "store"
-  description: "Access to Petstore orders"
-- name: "user"
-  description: "Operations about user"
-  externalDocs:
-    description: "Find out more about our store"
-    url: "http://swagger.io"
 schemes:
 - "https"
 - "http"
 paths:
-  /pet:
+  /incident/save:
     post:
       tags:
-      - "pet"
-      summary: "Add a new pet to the store"
+      - "incident"
+      summary: "Add a new incident"
       description: ""
-      operationId: "addPet"
+      operationId: "save"
       consumes:
-      - "application/json"
-      - "application/xml"
-      produces:
-      - "application/xml"
+      - "application/json"      
+      produces:      
       - "application/json"
       parameters:
       - in: "body"
         name: "body"
-        description: "Pet object that needs to be added to the store"
+        description: "Incident object"
         required: true
         schema:
-          $ref: "#/definitions/User"
+          $ref: "#/definitions/IncidentRequest"
       responses:
-        "405":
-          description: "Invalid input"
+        "200":
+          description: "ok"
+          schema:
+            $ref: "#/definitions/IncidentResponse"
+        "400":
+          description: "error validation"
+  /incident/update:
+    put:
+      tags:
+      - "incident"
+      summary: "Update a incident"
+      description: ""
+      operationId: "update"
+      consumes:
+      - "application/json"      
+      produces:      
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Incident object"
+        required: true
+        schema:
+          $ref: "#/definitions/IncidentRequest"
+      responses:
+        "200":
+          description: "ok"
+          schema:
+            $ref: "#/definitions/IncidentResponse"
+        "400":
+          description: "error validation"
+  /incident/delete/{idIncident}:
+    delete:
+      tags:
+      - "incident"
+      summary: "Delete a incident"
+      description: ""
+      operationId: "delete"            
+      produces:      
+      - "application/json"
+      parameters:      
+       -name: idIncident
+       in: path
+       schema:
+          type: integer
+          format: "int64"
+      responses:
+        "200":
+          description: "ok"          
+        "400":
+          description: "error validation"
+  /incident/list:
+    get:
+      tags:
+      - "incident"
+      summary: "List incident"
+      description: ""
+      operationId: "list"            
+      produces:      
+      - "application/json"      
+      responses:
+        "200":
+          description: "ok"
+          schema:
+            type: "array"
+            items:
+               $ref: "#/definitions/IncidentResponse"
       security:
-      - petstore_auth:
-        - "write:pets"
-        - "read:pets"
+      - OAuth2: []
 definitions:  
-  User:
+  IncidentRequest:
     type: "object"
     properties:
-      id:
+      idIncident:
         type: "integer"
         format: "int64"
-      username:
+      name:
         type: "string"
-      firstName:
+      description:
         type: "string"
-      lastName:
+      createdAt:
         type: "string"
-      email:
+      updatedAt:
         type: "string"
-      password:
+      closedAt3:
         type: "string"
-      phone:
-        type: "string"
+  IncidentResponse:
+    type: "object"
+    properties:
+      idIncident:
+        type: "integer"
+        format: "int64"     
+      
